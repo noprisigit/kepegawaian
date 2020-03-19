@@ -183,6 +183,11 @@ class Users extends CI_Controller {
     }
 
     public function upload_dokumen() {
-        
+        $header['title'] = 'Upload';
+        $header['subtitle'] = 'Upload Dokumen';
+
+        $this->load->view('_template/header', $header);
+        $this->load->view('users/upload-dokumen');
+        $this->load->view('_template/footer');
     }
 }
