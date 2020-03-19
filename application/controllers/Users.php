@@ -7,6 +7,8 @@ class Users extends CI_Controller {
 
         if (!$this->session->userdata('email'))
             redirect('auth');
+
+        $this->load->model('UserModel');
     }
 
     public function index() {
@@ -51,5 +53,17 @@ class Users extends CI_Controller {
 
         $this->session->set_flashdata('message', 'Diblock');
         redirect('users');
+    }
+
+    public function data_diri() {
+        $header['title'] = 'Users';
+        $header['subtitle'] = 'Data Diri';
+
+        $content['pegawai'] = $this->UserModel->get_data_diri($this->session->userdata('id_user'));
+        // dd($content['pegawai']);
+
+        $this->load->view('_template/header', $header);
+		$this->load->view('users/data-diri', $content);
+		$this->load->view('_template/footer');
     }
 }

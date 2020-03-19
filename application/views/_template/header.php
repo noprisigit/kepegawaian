@@ -77,60 +77,74 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="<?= base_url('home'); ?>" class="nav-link <?= $title == 'Home' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li> 
-                        <li class="nav-item has-treeview <?= $title == 'Pegawai' ? 'menu-open' : '' ?>">
-                            <a href="#" class="nav-link <?= $title == 'Pegawai' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Data Pegawai
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= base_url('pegawai'); ?>" class="nav-link <?= $subtitle == 'List Data Pegawai' ? 'active' : '' ?>">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>List Data Pegawai</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url('pegawai/add'); ?>" class="nav-link <?= $subtitle == 'Tambah Data Pegawai' ? 'active' : '' ?>">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tambah Data Pegawai</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url('pegawai/salary'); ?>" class="nav-link <?= $subtitle == 'Data Gaji Pegawai' ? 'active' : '' ?>">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Gaji Pegawai</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url('pegawai/penilaian'); ?>" class="nav-link <?= $subtitle == 'Penilaian Pegawai' ? 'active' : '' ?>">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Penilaian Pegawai</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>   
-                        <li class="nav-item">
-                            <a href="<?= base_url('jabatan'); ?>" class="nav-link <?= $title == 'Jabatan' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-archive"></i>
-                                <p>Jabatan</p>
-                            </a>
-                        </li>                     
-                        <li class="nav-item">
-                            <a href="<?= base_url('users'); ?>" class="nav-link <?= $title == 'Users' ? 'active' : '' ?>">
-                                <i class="nav-icon fas fa-users-cog"></i>
-                                <p>Users</p>
-                            </a>
-                        </li>                     
-                       
+                        <?php if($this->session->userdata('status_access') == 'admin') :  ?>
+                            <li class="nav-item">
+                                <a href="<?= base_url('home'); ?>" class="nav-link <?= $title == 'Home' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item has-treeview <?= $title == 'Pegawai' ? 'menu-open' : '' ?>">
+                                <a href="#" class="nav-link <?= $title == 'Pegawai' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Data Pegawai
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= base_url('pegawai'); ?>" class="nav-link <?= $subtitle == 'List Data Pegawai' ? 'active' : '' ?>">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List Data Pegawai</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= base_url('pegawai/add'); ?>" class="nav-link <?= $subtitle == 'Tambah Data Pegawai' ? 'active' : '' ?>">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tambah Data Pegawai</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= base_url('pegawai/salary'); ?>" class="nav-link <?= $subtitle == 'Data Gaji Pegawai' ? 'active' : '' ?>">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Gaji Pegawai</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?= base_url('pegawai/penilaian'); ?>" class="nav-link <?= $subtitle == 'Penilaian Pegawai' ? 'active' : '' ?>">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Data Penilaian Pegawai</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>   
+                            <li class="nav-item">
+                                <a href="<?= base_url('jabatan'); ?>" class="nav-link <?= $title == 'Jabatan' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-archive"></i>
+                                    <p>Jabatan</p>
+                                </a>
+                            </li>                     
+                            <li class="nav-item">
+                                <a href="<?= base_url('users'); ?>" class="nav-link <?= $title == 'Users' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-users-cog"></i>
+                                    <p>Users</p>
+                                </a>
+                            </li> 
+                        <?php else : ?> 
+                            <li class="nav-item">
+                                <a href="<?= base_url('home/user'); ?>" class="nav-link <?= $title == 'Home' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>                    
+                            <li class="nav-item">
+                                <a href="<?= base_url('users/data-diri'); ?>" class="nav-link <?= $title == 'Users' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>Data Diri</p>
+                                </a>
+                            </li>                    
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
