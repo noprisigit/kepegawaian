@@ -24,8 +24,9 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container">
-                    <div class="row">
+                <div class="container-fluid">
+                    <a href="<?= base_url('users/update-data-diri') ?>" class="btn btn-info">Update Data Diri</a>
+                    <div class="row mt-3">
                         <!-- left column -->
                         <div class="col-md-12">
                             <!-- general form elements -->
@@ -58,7 +59,7 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                        <input type="text" class="form-control datepicker" name="tgl_lahir_pegawai" id="tgl_lahir_pegawai" value="<?= $pegawai['tgl_lahir_pegawai']; ?>" readonly>
+                                                        <input type="text" class="form-control" name="tgl_lahir_pegawai" id="tgl_lahir_pegawai" value="<?= $pegawai['tgl_lahir_pegawai']; ?>" readonly>
                                                     </div>
                                                 </div>
                                             </div>

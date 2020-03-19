@@ -66,4 +66,16 @@ class Users extends CI_Controller {
 		$this->load->view('users/data-diri', $content);
 		$this->load->view('_template/footer');
     }
+
+    public function update_data_diri() {
+        $header['title'] = 'Users';
+        $header['subtitle'] = 'Data Diri';
+
+        $content['pegawai'] = $this->UserModel->get_data_diri($this->session->userdata('id_user'));
+        // dd($content['pegawai']);
+
+        $this->load->view('_template/header', $header);
+		$this->load->view('users/update-data-diri', $content);
+		$this->load->view('_template/footer');
+    }
 }
