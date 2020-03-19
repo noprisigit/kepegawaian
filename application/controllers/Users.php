@@ -301,4 +301,13 @@ class Users extends CI_Controller {
 			redirect('users/upload-dokumen');
         }
     }
+
+    public function delete_dokumen($id) {
+        $dokumen = $this->db->get_where('master_dokumen', ['id_dokumen' => $id])->row_array();
+        unlink(FCPATH . 'assets/dist/file/' . $dokumen['nama_file']);
+        $this->db->delete('master_dokumen', ['id_dokumen' => $id]);
+
+        $this->session->set_flashdata('message', 'Dihapus');
+        redirect('users/upload-dokumen');
+    }
 }

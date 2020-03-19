@@ -47,6 +47,7 @@
         // $('.select2bs4').select2({
         //     theme: 'bootstrap4'
         // })
+        $('.data-table').DataTable();
         $("#data-pegawai").DataTable({
             scrollX: true,
             scrollCollapse: true,

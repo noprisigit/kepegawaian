@@ -35,7 +35,7 @@
                             </div> -->
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="data-users" class="table table-bordered">
+                                <table class="table table-bordered data-table">
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
@@ -56,6 +56,7 @@
                                             <td class="text-center">
                                                 <a href="<?= base_url('users/download?file=') . $item['nama_file']; ?>" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></a>
                                                 <a href="<?= base_url('users/update-dokumen/') . $item['id_dokumen']; ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Update Dokumen"><i class="fas fa-upload"></i></a>
+                                                <a href="<?= base_url('users/delete-dokumen/') . $item['id_dokumen']; ?>" class="btn btn-danger btn-delete-dokumen" data-toggle="tooltip" data-placement="top" title="Delete Dokumen"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         <?php 
