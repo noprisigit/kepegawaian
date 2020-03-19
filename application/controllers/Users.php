@@ -145,4 +145,44 @@ class Users extends CI_Controller {
 			redirect('users/data-diri');
         }
     }
+
+    public function absensi() {
+        $this->form_validation->set_rules('status_absensi', 'Status absensi', 'trim|required', [
+            'required'  =>  '%s harus diisi'
+        ]);
+        $this->form_validation->set_rules('keterangan_absensi', 'Keterangan absensi', 'trim|required', [
+            'required'  =>  '%s harus diisi'
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $header['title'] = 'Absensi';
+            $header['subtitle'] = 'Absensi Diri';
+
+            $pegawai = $this->db->get_where('pegawai', ['id_user' => $this->session->userdata('id_user')])->row_array();
+            $content['absensi'] = $this->db->query('SELECT COUNT(*) as total FROM absensi WHERE id_pegawai = '. $pegawai['id_pegawai'] .' and date(tgl_absensi) = CURDATE()')->row_array();
+            // dd($absensi);
+            $this->load->view('_template/header', $header);
+            $this->load->view('users/absensi', $content);
+            $this->load->view('_template/footer');
+        } else {
+            $pegawai = $this->db->get_where('pegawai', ['id_user' => $this->session->userdata('id_user')])->row_array();
+            
+            date_default_timezone_set('Asia/Jakarta');
+
+            $absensi = [
+                'id_pegawai'            => $pegawai['id_pegawai'],
+                'status_absensi'        => $this->input->post('status_absensi'),
+                'keterangan_absensi'    => $this->input->post('keterangan_absensi'),
+                'tgl_absensi'           => date('Y-m-d H:i:s')
+            ];
+
+            $this->db->insert('absensi', $absensi);
+            $this->session->set_flashdata('message', 'Ditambahkan');
+			redirect('users/absensi');
+        }
+    }
+
+    public function upload_dokumen() {
+        
+    }
 }

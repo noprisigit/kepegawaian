@@ -144,6 +144,18 @@
                                     <p>Data Diri</p>
                                 </a>
                             </li>                    
+                            <li class="nav-item">
+                                <a href="<?= base_url('users/absensi'); ?>" class="nav-link <?= $title == 'Absensi' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-edit"></i>
+                                    <p>Absensi</p>
+                                </a>
+                            </li>                    
+                            <li class="nav-item">
+                                <a href="<?= base_url('users/upload-dokumen'); ?>" class="nav-link <?= $title == 'Upload' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-file-upload"></i>
+                                    <p>Upload Dokumen</p>
+                                </a>
+                            </li>                    
                         <?php endif; ?>
                     </ul>
                 </nav>
