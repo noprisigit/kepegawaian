@@ -71,20 +71,32 @@ class Auth extends CI_Controller {
          
         if ($user) {
             if (password_verify($input['password'], $user['password'])) {
-                $data = [
-                    'nama'  => $user['nama'],
-                    'email' => $user['email']
-                ];
-                $this->session->set_userdata($data);
-                redirect('home');
+                if ($user['status_account'] == 1) {
+                    $data = [
+                        'id_user'   => $user['id'],
+                        'nama'      => $user['nama'],
+                        'email'     => $user['email']
+                    ];
+                    $this->session->set_userdata($data);
+
+                    if ($user['status_access'] == 'admin')
+                        redirect('home');
+                    else 
+                        redirect('home/user');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger text-center" role="alert">
+                        Your account is not active!.
+                    </div>');
+                    redirect('auth');
+                }
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                $this->session->set_flashdata('message', '<div class="alert alert-danger text-center" role="alert">
                     Check your password!.
                 </div>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-danger text-center" role="alert">
                 Check your username or password!.
             </div>');
             redirect('auth');   

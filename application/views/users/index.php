@@ -53,7 +53,7 @@
                                             foreach ($users as $item) :
                                         ?>
                                         <tr>
-                                            <td><?= $no; ?></td>
+                                            <td class="text-center"><?= $no; ?></td>
                                             <td><?= $item['nama']; ?></td>
                                             <td><?= $item['email']; ?></td>
                                             <td class="text-center"><?= $item['status_access']; ?></td>
