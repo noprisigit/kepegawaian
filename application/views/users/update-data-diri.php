@@ -102,7 +102,7 @@
                                                 </div>  
                                                 <div class="form-group">
                                                     <label for="jabatan">Jabatan</label>
-                                                    <select name="jabatan_pegawai" id="jabatan_pegawai" class="form-control">
+                                                    <select name="jabatan_pegawai" id="jabatan_pegawai" class="form-control" disabled>
                                                         <option selected disabled>Jabatan</option>
                                                         <?php 
                                                             foreach($jabatan as $jbtn) : 
