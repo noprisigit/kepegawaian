@@ -67,6 +67,7 @@
                 { "width": "150px", "targets": [1,2] },
                 { "width": "90px", "targets": [3,4] },
                 { "width": "150px", "targets": [5, 6] },
+                { "width": "100px", "targets": 7 },
             ]
         });
     

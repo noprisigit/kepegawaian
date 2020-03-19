@@ -19,4 +19,37 @@ class Users extends CI_Controller {
 		$this->load->view('users/index', $content);
 		$this->load->view('_template/footer');
     }
+
+    public function verify($id) {
+        $this->db->set('status_account', 1);
+        $this->db->where('id', $id);
+        $this->db->update('users');
+
+        $this->session->set_flashdata('message', 'Diverifikasi');
+        redirect('users');
+    }
+
+    public function edit_user () {
+        date_default_timezone_set('asia/jakarta');
+
+        $this->db->set('nama', $this->input->post('nama'));
+        $this->db->set('email', $this->input->post('email'));
+        $this->db->set('status_access', $this->input->post('status_akses'));
+        $this->db->set('status_account', $this->input->post('status_akun'));
+        $this->db->set('date_updated', date('Y-m-d H:i:s'));
+        $this->db->where('id', $this->input->post('id_user'));
+        $this->db->update('users');
+
+        $this->session->set_flashdata('message', 'Diperbaharui');
+        redirect('users');
+    }
+
+    public function block_user($id) {
+        $this->db->set('status_account', 0);
+        $this->db->where('id', $id);
+        $this->db->update('users');
+
+        $this->session->set_flashdata('message', 'Diblock');
+        redirect('users');
+    }
 }

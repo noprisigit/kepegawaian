@@ -202,3 +202,28 @@ $('.delete-salary').on('click', function (e) {
         }
     });
 });
+
+$('.btn-edit-user').on('click', function () {
+    var status_akses = $(this).data('status_akses');
+    var status_akun = $(this).data('status_akun');
+
+    $('.modal-body input[name="id_user"]').attr('value', $(this).data('id_user'));
+    $('.modal-body input[name="nama"]').attr('value', $(this).data('nama'));
+    $('.modal-body input[name="email"]').attr('value', $(this).data('email'));
+    
+    if (status_akses == 'admin') {
+        $('.modal-body select[name="status_akses"]').append('<option value="admin" selected>admin</option>');
+        $('.modal-body select[name="status_akses"]').append('<option value="pegawai">pegawai</option>');
+    } else {
+        $('.modal-body select[name="status_akses"]').append('<option value="admin">admin</option>');
+        $('.modal-body select[name="status_akses"]').append('<option value="pegawai" selected>pegawai</option>');
+    }
+
+    if (status_akun == 0) {
+        $('.modal-body select[name="status_akun"]').append('<option value="0" selected>Tidak Aktif</option>');
+        $('.modal-body select[name="status_akun"]').append('<option value="1">Aktif</option>');
+    } else {
+        $('.modal-body select[name="status_akun"]').append('<option value="0">Tidak Aktif</option>');
+        $('.modal-body select[name="status_akun"]').append('<option value="1" selected>Aktif</option>');
+    }
+});
