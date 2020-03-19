@@ -10,7 +10,7 @@ class Absensi extends CI_Controller {
 
     public function index() {
         $header['title'] = 'Absensi';
-		$header['subtitle'] = 'List Data Pegawai';
+		$header['subtitle'] = 'Rekapitulasi Absensi';
 		
 		$this->load->view('_template/header', $header);
 		$this->load->view('absensi/index');

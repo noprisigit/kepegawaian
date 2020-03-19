@@ -258,3 +258,16 @@ $('.btn-delete-dokumen').on('click', function (e) {
 		}
 	});
 });
+
+$('#filter').on('change', function () {
+	var value = $(this).val();
+
+	$('#base_tanggal').css('display', 'none');
+	$('#base_nama').css('display', 'none');
+
+	if (value == 1) {
+		$('#base_tanggal').css('display', 'block');
+	} else if (value == 2) {
+		$('#base_nama').css('display', 'block');
+	}
+});
