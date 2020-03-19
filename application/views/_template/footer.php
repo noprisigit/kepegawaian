@@ -90,6 +90,95 @@
                 }
             });
         });
+
+        $('#filter_date').on('click', function() {
+            var tgl = $('#tgl').val();
+            var bln = $('#bln').val();
+            var thn = $('#thn').val();
+            console.log("tanggal : "+tgl);
+            console.log("bulan : "+bln);
+            console.log("tahun : "+thn);
+
+            if (tgl == null || bln == null || thn == null) {
+                alert('Pilih bulan, tanggal, dan tahun');
+            } else {
+                $('#card_rekap_tanggal').css('display', 'block');
+                $('#hasil_rekap_tanggal').empty();
+                $.ajax({
+                    url: "<?= base_url('absensi/get_by_date'); ?>",
+                    type: "POST",
+                    data: { tanggal : tgl, bulan: bln, tahun: thn },
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        if (res.length > 0) {
+                            for (var i = 0; i < res.length; i++) {
+                                $('#hasil_rekap_tanggal').append(`
+                                    <tr>
+                                        <td class="text-center">` + (i+1) + `</td>
+                                        <td>` + res[i]['nama_pegawai'] + `</td>
+                                        <td class="text-center">` + res[i]['status_absensi'] + `</td>
+                                        <td class="text-center">` + res[i]['keterangan_absensi'] + `</td>
+                                        <td class="text-center">` + res[i]['tgl_absensi'] + `</td>
+                                    </tr>
+                                `);
+                            }
+                        } else {
+                            $('#hasil_rekap_tanggal').append(`
+                                <tr>
+                                    <td colspan="5" class="text-center">Data Tidak Ditemukan</td>
+                                </tr>
+                            `);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
+
+        $('#filter_name').on('click', function () {
+            var nama = $('#filter_nama_pegawai').val();
+            console.log(nama);
+
+            if (nama == null) {
+                alert('Pilih nama pegawai terlebih dahulu');
+            } else {
+                $('#card_rekap_nama').css('display', 'block');
+                $('#hasil_rekap_nama').empty();
+                $.ajax({
+                    url: "<?= base_url('absensi/get-by-name'); ?>",
+                    type: "POST",
+                    data: { id_pegawai : nama },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.length > 0) {
+                            for (var i = 0; i < res.length; i++) {
+                                $('#hasil_rekap_nama').append(`
+                                    <tr>
+                                        <td class="text-center">` + (i+1) + `</td>
+                                        <td>` + res[i]['nama_pegawai'] + `</td>
+                                        <td class="text-center">` + res[i]['status_absensi'] + `</td>
+                                        <td class="text-center">` + res[i]['keterangan_absensi'] + `</td>
+                                        <td class="text-center">` + res[i]['tgl_absensi'] + `</td>
+                                    </tr>
+                                `);
+                            }
+                        } else {
+                            $('#hasil_rekap_nama').append(`
+                                <tr>
+                                    <td colspan="5" class="text-center">Data Tidak Ditemukan</td>
+                                </tr>
+                            `);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        });
     </script>
     
 </body>

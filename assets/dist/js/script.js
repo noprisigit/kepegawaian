@@ -264,6 +264,11 @@ $('#filter').on('change', function () {
 
 	$('#base_tanggal').css('display', 'none');
 	$('#base_nama').css('display', 'none');
+	$('#card_rekap_tanggal').css('display', 'none');
+	$('#card_rekap_nama').css('display', 'none');
+	$('#tgl').val('');
+	$('#bln').val('');
+	$('#thn').val('');
 
 	if (value == 1) {
 		$('#base_tanggal').css('display', 'block');
