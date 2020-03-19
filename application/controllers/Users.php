@@ -97,6 +97,12 @@ class Users extends CI_Controller {
         } else {
             $image = $_FILES['foto_pegawai']['name'];
 
+            $tgl_lahir_pegawai = date_create($this->input->post('tgl_lahir_pegawai'));
+			$tgl_lahir_pegawai = date_format($tgl_lahir_pegawai, 'Y-m-d');
+
+			$tgl_masuk_pegawai = date_create($this->input->post('tgl_masuk_pegawai'));
+			$tgl_masuk_pegawai = date_format($tgl_masuk_pegawai, 'Y-m-d');
+
             if ($image) {
                 $config['allowed_types'] = 'gif|jpg|png';
                 $config['max_size'] = 2048;
@@ -118,6 +124,20 @@ class Users extends CI_Controller {
                 }
             }
 
+            $this->db->set('nip_pegawai', htmlspecialchars($this->input->post('nip_pegawai'), true));
+			$this->db->set('nama_pegawai', htmlspecialchars($this->input->post('nama_pegawai'), true));
+			$this->db->set('tmpt_lahir_pegawai', htmlspecialchars($this->input->post('tmpt_lahir_pegawai'), true));
+			$this->db->set('tgl_lahir_pegawai', $tgl_lahir_pegawai);
+			$this->db->set('jns_kelamin_pegawai', htmlspecialchars($this->input->post('jns_kelamin_pegawai'), true));
+			$this->db->set('status_pernikahan_pegawai', htmlspecialchars($this->input->post('status_pernikahan_pegawai'), true));
+			$this->db->set('agama_pegawai', htmlspecialchars($this->input->post('agama_pegawai'), true));
+			$this->db->set('alamat_pegawai', htmlspecialchars($this->input->post('alamat_pegawai'), true));
+			$this->db->set('id_jabatan_pegawai', htmlspecialchars($this->input->post('jabatan_pegawai'), true));
+			$this->db->set('email_pegawai', htmlspecialchars($this->input->post('email_pegawai'), true));
+			$this->db->set('no_hp_pegawai', htmlspecialchars($this->input->post('no_hp_pegawai'), true));
+			$this->db->set('tgl_masuk_pegawai', $tgl_masuk_pegawai);
+			$this->db->set('status_pegawai', htmlspecialchars($this->input->post('status_pegawai'), true));
+			$this->db->set('pend_terakhir_pegawai', htmlspecialchars($this->input->post('pend_terakhir_pegawai'), true));
             $this->db->where('id_pegawai', $this->input->post('id_pegawai'));
             $this->db->update('pegawai');
 
