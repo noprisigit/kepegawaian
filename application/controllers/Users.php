@@ -253,4 +253,52 @@ class Users extends CI_Controller {
 
         force_download('./assets/dist/file/'.$file, NULL);
     }
+
+    public function update_dokumen() {
+        $id = $this->uri->segment(3);
+
+        $this->form_validation->set_rules('keterangan_file', 'Keterangan file', 'trim|required', [
+            'required'  =>  '%s harus diisi'
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            $header['title'] = 'Upload';
+            $header['subtitle'] = 'Panel Update Dokumen';
+    
+            $content['dokumen'] = $this->db->get_where('master_dokumen', ['id_dokumen' => $id])->row_array();
+    
+            $this->load->view('_template/header', $header);
+            $this->load->view('users/panel-update-dokumen', $content);
+            $this->load->view('_template/footer');
+        } else {
+            $nama_file = $_FILES['file']['name'];
+
+            if ($nama_file) {
+                $config['allowed_types'] = 'doc|docx|pdf';
+                $config['max_size'] = 2048;
+                $config['upload_path'] = './assets/dist/file/';
+
+                $this->load->library('upload', $config);
+                $dokumen = $this->db->get_where('master_dokumen', ['id_dokumen' => $this->input->post('id_dokumen')])->row_array();
+                // dd($data);
+                if($this->upload->do_upload('file')){
+                    $old_file = $dokumen['nama_file'];
+                    if ($nama_file != $old_file) {
+                        unlink(FCPATH . 'assets/dist/file/' . $old_file);
+                    }
+                    $file = $this->upload->data('file_name');
+                    $this->db->set('nama_file', $file);
+                }else{
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $this->db->set('keterangan', $this->input->post('keterangan_file'));
+            $this->db->where('id_dokumen', $this->input->post('id_dokumen'));
+            $this->db->update('master_dokumen');
+
+            $this->session->set_flashdata('message', 'Diperbaharui');
+			redirect('users/upload-dokumen');
+        }
+    }
 }
