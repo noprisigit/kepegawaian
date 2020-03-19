@@ -57,6 +57,18 @@
                 { "width": "110px", "targets": [7] },
             ]
         });
+        $("#data-users").DataTable({
+            scrollX: true,
+            scrollCollapse: true,
+            autoWidth: true,  
+            paging: true,       
+            columnDefs: [       
+                { "width": "10px", "targets": 0 },
+                { "width": "150px", "targets": [1,2] },
+                { "width": "90px", "targets": [3,4] },
+                { "width": "150px", "targets": [5, 6] },
+            ]
+        });
     
         
     </script>
