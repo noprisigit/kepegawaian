@@ -25,9 +25,10 @@
         <!-- Main content -->
         <section class="content">
             <div class="container">
-                <div class="row">
+                <a href="<?= base_url('users/upload'); ?>" class="btn btn-info">Upload Dokumen</a>
+                <div class="row mt-3">
                     <div class="col-md-12">
-                        <div class="message" data-title="Akun User" data-message="<?= $this->session->flashdata('message'); ?>"></div>
+                        <div class="message" data-title="Dokumen" data-message="<?= $this->session->flashdata('message'); ?>"></div>
                         <div class="card">
                             <!-- <div class="card-header">
                                 <h3 class="card-title">DataTable with default features</h3>
@@ -51,8 +52,11 @@
                                         <tr>
                                             <td class="text-center"><?= $no; ?></td>
                                             <td><?= $item['nama_file']; ?></td>
-                                            <td><?= $item['keterangan']; ?></td>
-                                            <td>
+                                            <td class="text-center"><?= $item['keterangan']; ?></td>
+                                            <td class="text-center">
+                                                
+                                                    <a href="<?= base_url('users/download?file=') . $item['nama_file']; ?>" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Download"><i class="fas fa-download"></i></a>
+                                                <a href="<?= base_url('users/update-dokumen/') . $item['id_dokumen']; ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Update Dokumen"><i class="fas fa-upload"></i></a>
                                             </td>
                                         </tr>
                                         <?php 

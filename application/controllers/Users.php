@@ -194,4 +194,63 @@ class Users extends CI_Controller {
         $this->load->view('users/upload-dokumen', $content);
         $this->load->view('_template/footer');
     }
+
+    public function upload() {
+       
+        $this->form_validation->set_rules('keterangan_file', 'Keterangan file', 'trim|required', [
+            'required'  =>  '%s harus diisi'
+        ]);
+        if(empty($_FILES['file']['name'])) {
+            $this->form_validation->set_rules('file', 'Keterangan file', 'trim|required', [
+                'required'  =>  'Pilih dokumen yang akan diupload'
+            ]);
+        }
+
+        if ($this->form_validation->run() == false) {
+            $header['title'] = 'Upload';
+            $header['subtitle'] = 'Panel Upload Dokumen';
+    
+            $this->load->view('_template/header', $header);
+            $this->load->view('users/panel-upload-dokumen');
+            $this->load->view('_template/footer');
+        } else {
+            $nama_file = $_FILES['file']['name'];
+
+            if ($nama_file) {
+                $config['allowed_types'] = 'doc|docx|pdf';
+                $config['max_size'] = 2048;
+                $config['upload_path'] = './assets/dist/file/';
+
+                $this->load->library('upload', $config);
+
+                // dd($data);
+                if($this->upload->do_upload('file')){
+                    $file = $this->upload->data('file_name');
+                }else{
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $data = $this->db->get_where('pegawai', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+            $upload = [
+                'id_pegawai'    => $data['id_pegawai'],
+                'nama_file'     => $file,
+                'keterangan'    => $this->input->post('keterangan_file')
+            ];
+
+            $this->db->insert('master_dokumen', $upload);
+
+            $this->session->set_flashdata('message', 'Diupload');
+			redirect('users/upload-dokumen');
+        }
+    }
+
+    public function download() {
+        $file = $this->input->get('file');
+
+        $this->load->helper('download');
+
+        force_download('./assets/dist/file/'.$file, NULL);
+    }
 }
