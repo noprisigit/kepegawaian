@@ -157,11 +157,7 @@
                                                         <div class="form-group">
                                                             <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
                                                             <select name="pend_terakhir_pegawai" id="edt_pend_terakhir_pegawai" class="form-control" value="<?= $pegawai['pend_terakhir_pegawai']; ?>">
-                                                                <option selected disabled>Pendidikan Terakhir</option>
-                                                                <option value="S2">S2</option>
-                                                                <option value="S1">S1</option>
-                                                                <option value="D3">D3</option>
-                                                                <option value="SMA">SMA</option>
+                                                                <option disabled>Pendidikan Terakhir</option>
                                                             </select>
                                                             <?= form_error('pend_terakhir_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                         </div>

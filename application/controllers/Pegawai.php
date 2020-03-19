@@ -39,9 +39,6 @@ class Pegawai extends CI_Controller {
 		$this->form_validation->set_rules('status_pegawai', 'Status Pegawai', 'trim|required', ['required' => 'Status Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('agama_pegawai', 'Agama Pegawai', 'trim|required', ['required' => 'Agama Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('pend_terakhir_pegawai', 'Pendidikan Terakhir Pegawai', 'trim|required', ['required' => 'Pendidikan Terakhir Harus Dipilih']);
-		if(empty($_FILES['foto_pegawai']['name'])) {
-            $this->form_validation->set_rules('foto_pegawai', 'Foto Pegawai', 'required', ['required' => 'Foto Pegawai Harus Dipilih']);
-        }
 		$this->form_validation->set_rules('alamat_pegawai', 'Alamat Pegawai', 'trim|required', ['required' => 'Alamat Pegawai Harus Diisi']);
 		
 		if ($this->form_validation->run() == false) {
@@ -51,26 +48,27 @@ class Pegawai extends CI_Controller {
 			$content['title'] = 'Data Pegawai';
 			$content['subtitle'] = 'Tambah Data Pegawai';
 			$content['jabatan'] = $this->PegawaiModel->get_list_jabatan();
+			$content['nama_pegawai'] = $this->db->get_where('users', ['status_access' => 'pegawai'])->result_array();
 	
 			$this->load->view('_template/header', $header);
 			$this->load->view('pegawai/add', $content);
 			$this->load->view('_template/footer');
 		} else {
-			$image = $_FILES['foto_pegawai']['name'];
-			// dd($image);
-			if ($image) {
-				$config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size'] = '2048';
-				$config['upload_path'] = './assets/dist/img/profile';
+			// $image = $_FILES['foto_pegawai']['name'];
+			// // dd($image);
+			// if ($image) {
+			// 	$config['allowed_types'] = 'gif|jpg|png';
+            //     $config['max_size'] = '2048';
+			// 	$config['upload_path'] = './assets/dist/img/profile';
 				
-				$this->load->library('upload', $config);
+			// 	$this->load->library('upload', $config);
 
-				if($this->upload->do_upload('foto_pegawai')) {
-					$foto_pegawai = $this->upload->data('file_name');
-                } else {
-                    $this->upload->display_errors();
-                }
-			}
+			// 	if($this->upload->do_upload('foto_pegawai')) {
+			// 		$foto_pegawai = $this->upload->data('file_name');
+            //     } else {
+            //         $this->upload->display_errors();
+            //     }
+			// }
 
 			$tgl_lahir_pegawai = date_create($this->input->post('tgl_lahir_pegawai'));
 			$tgl_lahir_pegawai = date_format($tgl_lahir_pegawai, 'Y-m-d');
@@ -79,6 +77,7 @@ class Pegawai extends CI_Controller {
 			$tgl_masuk_pegawai = date_format($tgl_masuk_pegawai, 'Y-m-d');
 
 			$data = [
+				'id_user'					=> $this->input->post('id_user'),
 				'nip_pegawai'				=> htmlspecialchars($this->input->post('nip_pegawai')),
 				'nama_pegawai'				=> htmlspecialchars($this->input->post('nama_pegawai')),
 				'tmpt_lahir_pegawai'		=> htmlspecialchars($this->input->post('tmpt_lahir_pegawai')),
@@ -93,7 +92,7 @@ class Pegawai extends CI_Controller {
 				'tgl_masuk_pegawai'			=> $tgl_masuk_pegawai,
 				'status_pegawai'			=> htmlspecialchars($this->input->post('status_pegawai')),
 				'pend_terakhir_pegawai'		=> htmlspecialchars($this->input->post('pend_terakhir_pegawai')),
-				'foto_pegawai'				=> $foto_pegawai
+				'foto_pegawai'				=> 'default.png'
 			];
 			
 			$this->db->insert('pegawai', $data);
@@ -357,4 +356,8 @@ class Pegawai extends CI_Controller {
 		redirect('pegawai/penilaian');
 	}
 
+	public function get_user_by_name() {
+		$data = $this->db->get_where('users', ['nama' => $this->input->post('nama_user')])->row_array();
+		echo json_encode($data);
+	}
 }

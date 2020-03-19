@@ -34,19 +34,25 @@
                             <div class="card card-primary">
                                 <!-- /.card-header -->
                                 <!-- form start -->
-                                <?= form_open_multipart('pegawai/add'); ?>
+                                <!-- <?= form_open_multipart('pegawai/add'); ?> -->
                                 <form action="<?= base_url('pegawai/add'); ?>" method="post"role="form">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <input type="hidden" name="id_user" id="add_id_user">
                                                 <div class="form-group">
                                                     <label for="nip">NIP</label>
                                                     <input type="text" class="form-control" name="nip_pegawai" id="nip_pegawai" placeholder="NIP" required>
                                                     <?= form_error('nip_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="nama">Nama Pegawai</label>
-                                                    <input type="text" class="form-control" name="nama_pegawai" id="nama_pegawai" placeholder="Nama Pegawai" required>
+                                                    <label>Nama Pegawai</label>
+                                                    <select class="form-control select2bs4" name="nama_pegawai" id="ed_nama_pegawai" style="width: 100%;" required>
+                                                        <option selected="selected" disabled>- Nama Pegawai -</option>
+                                                        <?php foreach ($nama_pegawai as $item) : ?>
+                                                            <option value="<?= $item['nama'] ?>"><?= $item['nama']; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
                                                     <?= form_error('nama_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
                                                 <div class="row">
@@ -60,7 +66,7 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                            <input type="text" class="form-control datepicker" name="tgl_lahir_pegawai" id="tgl_lahir_pegawai" placeholder="Tanggal Lahir" required>
+                                                            <input type="date" class="form-control" name="tgl_lahir_pegawai" id="tgl_lahir_pegawai" placeholder="Tanggal Lahir" required>
                                                             <?= form_error('tgl_lahir_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                         </div>
                                                     </div>
@@ -116,7 +122,7 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="tanggal_masuk">Tanggal Masuk</label>
-                                                            <input type="text" class="form-control datepicker" name="tgl_masuk_pegawai" id="tgl_masuk_pegawai" placeholder="Tanggal Masuk" required>
+                                                            <input type="date" class="form-control" name="tgl_masuk_pegawai" id="tgl_masuk_pegawai" placeholder="Tanggal Masuk" required>
                                                             <?= form_error('tgl_masuk_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                         </div>
                                                     </div>
@@ -132,43 +138,29 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="agama">Agama</label>
-                                                            <select name="agama_pegawai" id="agama_pegawai" class="form-control" required>
-                                                                <option selected disabled>Agama</option>
-                                                                <option value="Islam">Islam</option>
-                                                                <option value="Kristen Protestan">Kristen Protestan</option>
-                                                                <option value="Kristen Katolik">Kristen Katolik</option>
-                                                                <option value="Hindu">Hindu</option>
-                                                                <option value="Buddha">Buddha</option>
-                                                                <option value="Konghucu">Konghucu</option>
-                                                            </select>
-                                                            <?= form_error('agama_pegawai', '<small class="text-danger">', '</small>'); ?>
-                                                        </div>
-                                                    </div>  
-                                                    <div class="col-6">
-                                                        <div class="form-group">
-                                                            <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
-                                                            <select name="pend_terakhir_pegawai" id="pend_terakhir_pegawai" class="form-control" required>
-                                                                <option selected disabled>Pendidikan Terakhir</option>
-                                                                <option value="S2">S2</option>
-                                                                <option value="S1">S1</option>
-                                                                <option value="D3">D3</option>
-                                                                <option value="SMA">SMA</option>
-                                                            </select>
-                                                            <?= form_error('pend_terakhir_pegawai', '<small class="text-danger">', '</small>'); ?>
-                                                        </div>
-                                                    </div>  
+                                                <div class="form-group">
+                                                    <label for="agama">Agama</label>
+                                                    <select name="agama_pegawai" id="agama_pegawai" class="form-control" required>
+                                                        <option selected disabled>Agama</option>
+                                                        <option value="Islam">Islam</option>
+                                                        <option value="Kristen Protestan">Kristen Protestan</option>
+                                                        <option value="Kristen Katolik">Kristen Katolik</option>
+                                                        <option value="Hindu">Hindu</option>
+                                                        <option value="Buddha">Buddha</option>
+                                                        <option value="Konghucu">Konghucu</option>
+                                                    </select>
+                                                    <?= form_error('agama_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="foto">Foto</label>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name="foto_pegawai" id="foto_pegawai" accept=".jpg,.jpeg,.png" required>
-                                                        <label class="custom-file-label" for="customFile">Upload Foto</label>
-                                                        <?= form_error('foto_pegawai', '<small class="text-danger">', '</small>'); ?>
-                                                    </div>
+                                                    <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
+                                                    <select name="pend_terakhir_pegawai" id="pend_terakhir_pegawai" class="form-control" required>
+                                                        <option selected disabled>Pendidikan Terakhir</option>
+                                                        <option value="S2">S2</option>
+                                                        <option value="S1">S1</option>
+                                                        <option value="D3">D3</option>
+                                                        <option value="SMA">SMA</option>
+                                                    </select>
+                                                    <?= form_error('pend_terakhir_pegawai', '<small class="text-danger">', '</small>'); ?>
                                                 </div>
                                             </div>
                                         </div>

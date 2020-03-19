@@ -38,7 +38,10 @@
     <script src="<?= base_url('assets/'); ?>dist/js/demo.js"></script>
     <script>
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
 
         //Initialize Select2 Elements
         // $('.select2bs4').select2({
@@ -71,7 +74,21 @@
             ]
         });
     
-        
+        $('#ed_nama_pegawai').on('change', function () {
+            var nama_pegawai = $(this).val();
+            
+
+            $.ajax({
+                url: "<?= base_url('pegawai/get_user_by_name'); ?>",
+                type: "post",
+                data: { nama_user : nama_pegawai },
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    $('#add_id_user').attr('value', res['id']);
+                }
+            });
+        });
     </script>
     
 </body>
