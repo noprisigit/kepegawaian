@@ -186,8 +186,12 @@ class Users extends CI_Controller {
         $header['title'] = 'Upload';
         $header['subtitle'] = 'Upload Dokumen';
 
+        $pegawai = $this->db->get_where('pegawai', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+        $content['dokumen'] = $this->db->get_where('master_dokumen', ['id_pegawai' => $pegawai['id_pegawai']])->result_array();
+
         $this->load->view('_template/header', $header);
-        $this->load->view('users/upload-dokumen');
+        $this->load->view('users/upload-dokumen', $content);
         $this->load->view('_template/footer');
     }
 }
