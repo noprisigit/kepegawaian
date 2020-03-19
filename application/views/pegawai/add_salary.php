@@ -35,7 +35,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label>Nama Pegawai</label>
-                                            <select class="form-control select2" name="pegawai" style="width: 100%;">
+                                            <select class="form-control select2bs4" name="pegawai" style="width: 100%;">
                                                 <option disabled selected="selected">Nama Pegawai</option>
                                                 <?php foreach($pegawai as $item) : ?>
                                                 <option value="<?= $item['id_pegawai']; ?>"><?= $item['nama_pegawai']; ?></option>
