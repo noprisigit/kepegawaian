@@ -131,6 +131,12 @@
                                     <p>Users</p>
                                 </a>
                             </li> 
+                            <li class="nav-item">
+                                <a href="<?= base_url('absensi'); ?>" class="nav-link <?= $title == 'Absensi' ? 'active' : '' ?>">
+                                    <i class="nav-icon fas fa-address-book"></i>
+                                    <p>Rekap Absensi</p>
+                                </a>
+                            </li> 
                         <?php else : ?> 
                             <li class="nav-item">
                                 <a href="<?= base_url('home/user'); ?>" class="nav-link <?= $title == 'Home' ? 'active' : '' ?>">
