@@ -35,7 +35,7 @@ class Home extends CI_Controller {
 		$content['jumlah_jabatan'] = $this->db->count_all_results('jabatan');
 
 		$this->load->view('_template/header', $header);
-		$this->load->view('home/index', $content);
+		$this->load->view('home/user', $content);
 		$this->load->view('_template/footer');
 	}
 }
