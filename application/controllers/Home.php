@@ -8,6 +8,9 @@ class Home extends CI_Controller {
 		if (!$this->session->userdata('email')) {
 			redirect('auth');
 		}
+		if ($this->session->userdata('status_access') != "admin") {
+			redirect('home/user');
+		}
 		
 		$header['title'] = 'Home';
 		$header['subtitle'] = 'Dashboard';

@@ -12,6 +12,9 @@ class Users extends CI_Controller {
     }
 
     public function index() {
+        if ($this->session->userdata('status_access') != "admin") {
+			redirect('home/user');
+		}
         $header['title'] = 'Users';
         $header['subtitle'] = 'List Users';
 

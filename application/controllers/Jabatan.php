@@ -12,6 +12,9 @@ class Jabatan extends CI_Controller {
     
     public function index()
 	{
+        if ($this->session->userdata('status_access') != "admin") {
+			redirect('home/user');
+		}
 		$header['title'] = 'Jabatan';
 		$header['subtitle'] = 'List Jabatan';
         

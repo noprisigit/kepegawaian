@@ -12,6 +12,9 @@ class Pegawai extends CI_Controller {
 
 	public function index()
 	{
+		if ($this->session->userdata('status_access') != "admin") {
+			redirect('home/user');
+		}
 		$header['title'] = 'Pegawai';
 		$header['subtitle'] = 'List Data Pegawai';
         
