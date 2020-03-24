@@ -26,8 +26,8 @@
             <section class="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <img src="" alt="Banner" class="img-fluid img-thumbnail">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <img src="<?= base_url('assets/dist/img/yasir.jpg'); ?>" alt="Banner" class="img-fluid img-thumbnail">
                         </div>
                     </div>
                 </div>
