@@ -25,7 +25,9 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container">
-                    <div class="row">
+                    <a href="#" class="btn btn-primary">Export to PDF</a>
+                    <a href="" class="btn btn-success">Export to Excel</a>
+                    <div class="row mt-2">
                         <div class="col-md-12">
                             <div class="message" data-title="Data Pegawai" data-message="<?= $this->session->flashdata('message'); ?>"></div>
                             <div class="card">
