@@ -25,7 +25,7 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container">
-                    <a href="#" class="btn btn-primary">Export to PDF</a>
+                    <a href="<?= base_url('export/export-pdf'); ?>" class="btn btn-primary">Export to PDF</a>
                     <a href="" class="btn btn-success">Export to Excel</a>
                     <div class="row mt-2">
                         <div class="col-md-12">
