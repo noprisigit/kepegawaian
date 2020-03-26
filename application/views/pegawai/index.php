@@ -26,7 +26,7 @@
             <section class="content">
                 <div class="container">
                     <a href="<?= base_url('export/export-pdf'); ?>" class="btn btn-primary">Export to PDF</a>
-                    <a href="" class="btn btn-success">Export to Excel</a>
+                    <a href="<?= base_url('export/export-excel'); ?>" class="btn btn-success">Export to Excel</a>
                     <div class="row mt-2">
                         <div class="col-md-12">
                             <div class="message" data-title="Data Pegawai" data-message="<?= $this->session->flashdata('message'); ?>"></div>
