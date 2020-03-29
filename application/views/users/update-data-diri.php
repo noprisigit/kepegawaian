@@ -102,21 +102,7 @@
                                                 </div>  
                                                 <div class="form-group">
                                                     <label for="jabatan">Jabatan</label>
-                                                    <select name="jabatan_pegawai" id="jabatan_pegawai" class="form-control" disabled>
-                                                        <option selected disabled>Jabatan</option>
-                                                        <?php 
-                                                            foreach($jabatan as $jbtn) : 
-                                                                if ($jbtn['id_jabatan'] == $pegawai['id_jabatan_pegawai']) :
-                                                        ?>
-                                                                <option value="<?= $jbtn['id_jabatan'] ?>" selected><?= $jbtn['nama_jabatan']; ?></option>
-                                                            <?php else : ?>
-                                                                <option value="<?= $jbtn['id_jabatan'] ?>"><?= $jbtn['nama_jabatan']; ?></option>
-                                                        <?php
-                                                                endif; 
-                                                            endforeach; 
-                                                        ?>
-                                                    </select>
-                                                    <?= form_error('jabatan_pegawai', '<small class="text-danger">', '</small>'); ?>
+                                                    <input type="text" class="form-control" readonly value="<?= $pegawai['nama_jabatan']; ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="email">Email</label>

@@ -78,7 +78,6 @@ class Users extends CI_Controller {
 		$this->form_validation->set_rules('jns_kelamin_pegawai', 'Jenis Kelamin Pegawai', 'trim|required', ['required' => 'Jenis Kelamin Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('status_pernikahan_pegawai', 'Status Pernikahan Pegawai', 'trim|required', ['required' => 'Status Pernikahan Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('no_hp_pegawai', 'No Handphone Pegawai', 'trim|required', ['required' => 'No Handphone Pegawai Harus Diisi']);
-		$this->form_validation->set_rules('jabatan_pegawai', 'Jabatan Pegawai', 'trim|required', ['required' => 'Jabatan Pegawai Tidak Harus Dipilih']);
 		$this->form_validation->set_rules('email_pegawai', 'Email Pegawai', 'trim|required', ['required' => 'Email Pegawai Harus Diisi']);
 		$this->form_validation->set_rules('tgl_masuk_pegawai', 'Tanggal Masuk Pegawai', 'trim|required', ['required' => 'Tanggal Masuk Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('status_pegawai', 'Status Pegawai', 'trim|required', ['required' => 'Status Pegawai Harus Dipilih']);
@@ -135,7 +134,6 @@ class Users extends CI_Controller {
 			$this->db->set('status_pernikahan_pegawai', htmlspecialchars($this->input->post('status_pernikahan_pegawai'), true));
 			$this->db->set('agama_pegawai', htmlspecialchars($this->input->post('agama_pegawai'), true));
 			$this->db->set('alamat_pegawai', htmlspecialchars($this->input->post('alamat_pegawai'), true));
-			$this->db->set('id_jabatan_pegawai', htmlspecialchars($this->input->post('jabatan_pegawai'), true));
 			$this->db->set('email_pegawai', htmlspecialchars($this->input->post('email_pegawai'), true));
 			$this->db->set('no_hp_pegawai', htmlspecialchars($this->input->post('no_hp_pegawai'), true));
 			$this->db->set('tgl_masuk_pegawai', $tgl_masuk_pegawai);
