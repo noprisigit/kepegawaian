@@ -107,6 +107,7 @@
 									<p>
 										Data Pegawai
 										<i class="right fas fa-angle-left"></i>
+										<span class="badge badge-warning right">3</span>
 									</p>
 								</a>
 								<ul class="nav nav-treeview">

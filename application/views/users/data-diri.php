@@ -1,25 +1,18 @@
-		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
 			<div class="content-header">
-					<div class="container">
-						<div class="row mb-2">
-							<div class="col-sm-6">
-									<h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
-										<!-- <small class="float-left">Text Muted</small> -->
-							</div>
-							<!-- /.col -->
-							<div class="col-sm-6">
-									<ol class="breadcrumb float-sm-right">
-										<li class="breadcrumb-item"><a href="#"><?= $title; ?></a></li>
-										<li class="breadcrumb-item active"><?= $subtitle; ?></li>
-									</ol>
-							</div>
-							<!-- /.col -->
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
 						</div>
-						<!-- /.row -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#"><?= $title; ?></a></li>
+								<li class="breadcrumb-item active"><?= $subtitle; ?></li>
+							</ol>
+						</div>
 					</div>
-					<!-- /.container-fluid -->
+				</div>
 			</div>
 
 			<section class="content">

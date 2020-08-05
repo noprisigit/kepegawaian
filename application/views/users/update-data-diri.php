@@ -1,6 +1,6 @@
 <div class="content-wrapper">
    <div class="content-header">
-      <div class="container">
+      <div class="container-fluid">
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
@@ -16,7 +16,7 @@
    </div>
 
    <section class="content">
-      <div class="container">
+      <div class="container-fluid">
          <div class="row">
             <div class="col-md-12">
                <div class="message" data-title="Data Diri" data-message="<?= $this->session->flashdata('message'); ?>"></div>

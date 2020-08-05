@@ -2,7 +2,7 @@
       <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
@@ -24,11 +24,11 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="message" data-title="Data Gaji" data-message="<?= $this->session->flashdata('message'); ?>"></div>
                     <a href="<?= base_url('pegawai/add_salary'); ?>" class="btn btn-success">Tambah Data Gaji</a>
                     <div class="row mt-3">
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <div class="card">
                                 <!-- /.card-header -->
                                 <div class="card-body p-0">

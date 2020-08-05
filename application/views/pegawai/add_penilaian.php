@@ -2,7 +2,7 @@
       <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
@@ -29,7 +29,7 @@
                         <!-- left column -->
                         <div class="col-md-9">
                             <!-- general form elements -->
-                            <div class="card card-primary">
+                            <div class="card card-primary card-outline">
                                 <!-- form start -->
                                 <form role="form" method="post" action="<?= base_url('pegawai/simpan_penilaian'); ?>">
                                     <div class="card-body">

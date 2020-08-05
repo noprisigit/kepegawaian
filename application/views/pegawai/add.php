@@ -31,7 +31,7 @@
                             <!-- general form elements -->
                             <div class="message" data-title="Data Pegawai" data-message="<?= $this->session->flashdata('message'); ?>"></div>
                             
-                            <div class="card card-primary">
+                            <div class="card card-primary card-outline">
                                 <!-- /.card-header -->
                                 <!-- form start -->
                                 <!-- <?= form_open_multipart('pegawai/add'); ?> -->
