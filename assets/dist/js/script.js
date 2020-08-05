@@ -613,5 +613,90 @@ $(document).ready(function() {
 			}
 		});
 		return false;
-	})
+	});
+
+	$('#formUpdateDataPegawai').submit(function(e) {
+		const tempat_lahir = $('#tmpt_lahir_pegawai').val();
+		const tgl_lahir = $('#tgl_lahir_pegawai').val();
+		const jns_kelamin = $('#jns_kelamin_pegawai').val();
+		const status_nikah = $('#status_pernikahan_pegawai').val();
+		const no_hp = $('#no_hp_pegawai').val();
+		const email = $('#email_pegawai').val();
+		const agama = $('#agama_pegawai').val();
+		const pend_terakhir = $('#pend_terakhir_pegawai').val();
+		const alamat = $('#alamat_pegawai').val();
+
+		if (tempat_lahir === null || tempat_lahir === "") {
+			e.preventDefault();
+			toastr.error('Tempat lahir harus diisi');
+			return false;
+		}
+		if (tgl_lahir === null || tgl_lahir === "") {
+			e.preventDefault();
+			toastr.error('Tanggal lahir harus dipilih');
+			return false;
+		}
+		if (jns_kelamin === null || jns_kelamin === "") {
+			e.preventDefault();
+			toastr.error('Jenis kelamin harus dipilih');
+			return false;
+		}
+		if (status_nikah === null || status_nikah === "") {
+			e.preventDefault();
+			toastr.error('Status pernikahan harus dipilih');
+			return false;
+		}
+		if (no_hp === null || no_hp === "") {
+			e.preventDefault();
+			toastr.error('No handphone harus diisi');
+			return false;
+		}
+		if (email === null || email === "") {
+			e.preventDefault();
+			toastr.error('Email harus diisi');
+			return false;
+		}
+		if (agama === null || agama === "") {
+			e.preventDefault();
+			toastr.error('Agama harus dipilih');
+			return false;
+		}
+		if (pend_terakhir === null || pend_terakhir === "") {
+			e.preventDefault();
+			toastr.error('Pendidikan terakhir harus diisi');
+			return false;
+		}
+		if (alamat === null || alamat === "") {
+			e.preventDefault();
+			toastr.error('Alamat harus diisi');
+			return false;
+		}
+
+		$.ajax({
+			url: '../edit-data-pegawai',
+			type: 'post',
+			data: new FormData(this),
+			dataType: 'json',
+			contentType: false,
+			cache: false,
+			processData: false,
+			success: function(res) {
+				if (res.status === false) {
+					e.prevendDefault();
+					toastr.error(res.msg);
+				} else {
+					Swal.fire(
+						'Good job!',
+						'Data diri telah diperbaharui',
+						'success'
+					).then((result) => {
+						if (result.value) {
+							window.location.href = "../../pegawai";
+						}
+					});
+				}
+			}
+		});
+		return false;
+	});
 });

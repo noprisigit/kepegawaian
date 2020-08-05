@@ -26,15 +26,13 @@
                   <div class="card-body">
                      <table id="data-pegawai" class="table table-bordered table-striped" width="100%">
                         <thead>
-                           <tr>
+                           <tr class="text-center">
                               <th>No</th>
+                              <th>Avatar</th>
                               <th>NIP</th>
                               <th>Nama</th>
                               <th>TTL</th>
                               <th>Jenis Kelamin</th>
-                              <th>Email</th>
-                              <th>No Handphone</th>
-                              <th>Tanggal Masuk</th>
                               <th>Action</th>
                            </tr>
                         </thead>
@@ -52,24 +50,28 @@
                            ?>
                            <tr>
                               <td class="text-center"><?= $no; ?></td>
+                              <td class="text-center"><img src="<?= base_url('assets/dist/img/profile/') . $pegawai['foto_pegawai'] ?>" class="img-thumbnail" width="98" alt="foto-pegawai"></td>
                               <td><?= $pegawai['nip_pegawai']; ?></td>
                               <td><?= $pegawai['nama_pegawai']; ?></td>
-                              <td><?= $pegawai['tmpt_lahir_pegawai']; ?>, <?= $tgl_lahir_pegawai; ?></td>
-                              <?php if($pegawai['jns_kelamin_pegawai'] == 'L') : ?>
-                                    <td class="text-center">Laki-Laki</td>
+                              <?php if ($pegawai['tmpt_lahir_pegawai'] == "" && $pegawai['tgl_lahir_pegawai'] == "") : ?>
+                                 <td class="text-center text-danger">Data belum ada</td>
                               <?php else : ?>
-                                    <td class="text-center">Perempuan</td>
+                                 <td><?= $pegawai['tmpt_lahir_pegawai']; ?>, <?= $tgl_lahir_pegawai; ?></td>
                               <?php endif; ?>
-                              <td><?= $pegawai['email_pegawai']; ?></td>
-                              <td><?= $pegawai['no_hp_pegawai']; ?></td>
-                              <td class="text-center"><?= $tgl_masuk_pegawai; ?></td>
-                              <td>
-                                    <div class="btn-group btn-group-sm">
-                                       <!-- <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="View"><i class="fas fa-eye"></i></a> -->
-                                       <a href="<?= base_url('pegawai/add_penilaian/'.$pegawai['id_pegawai']); ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Penilaian"><i class="fas fa-clipboard-list"></i></a>
-                                       <a href="<?= base_url('pegawai/edit/'.$pegawai['id_pegawai']); ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-                                       <a href="<?= base_url('pegawai/delete/') . $pegawai['id_pegawai']; ?>" class="btn btn-danger delete-pegawai" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></a>
-                                    </div>
+                              <?php if ($pegawai['jns_kelamin_pegawai'] == "") : ?>
+                                 <td class="text-center text-danger">Data belum ada</td>
+                              <?php else : ?>
+                                 <?php if($pegawai['jns_kelamin_pegawai'] == 'L') : ?>
+                                    <td class="text-center">Laki-Laki</td>
+                                 <?php else : ?>
+                                    <td class="text-center">Perempuan</td>
+                                 <?php endif; ?>
+                              <?php endif; ?>
+                              <td class="text-center">
+                                 <a href="<?= base_url('pegawai/detail-pegawai/') . $pegawai['id_pegawai'] ?>" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-folder-open"></i></a>
+                                 <a href="<?= base_url('pegawai/add_penilaian/'. $pegawai['id_pegawai']); ?>" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Penilaian"><i class="fas fa-clipboard-list"></i></a>
+                                 <a href="<?= base_url('pegawai/edit/'.$pegawai['id_pegawai']); ?>" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                 <a href="<?= base_url('pegawai/delete/') . $pegawai['id_pegawai']; ?>" class="btn btn-danger delete-pegawai" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt"></i></a>
                               </td>
                            </tr>
                            <?php $no++; ?>

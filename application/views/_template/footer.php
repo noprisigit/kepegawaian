@@ -58,13 +58,13 @@
             scrollCollapse: true,
             autoWidth: true,  
             paging: true,       
-            columnDefs: [       
-                { "width": "150px", "targets": [2] },
-                { "width": "120px", "targets": [3] },
-                { "width": "100px", "targets": [4] },
-                { "width": "110px", "targets": [6] },
-                { "width": "110px", "targets": [7] },
-            ]
+            // columnDefs: [       
+            //     { "width": "150px", "targets": [2] },
+            //     { "width": "120px", "targets": [3] },
+            //     { "width": "100px", "targets": [4] },
+            //     { "width": "110px", "targets": [6] },
+            //     { "width": "110px", "targets": [7] },
+            // ]
         });
         $("#data-users").DataTable({
             scrollX: true,

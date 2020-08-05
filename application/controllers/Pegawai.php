@@ -57,22 +57,6 @@ class Pegawai extends CI_Controller {
 			$this->load->view('pegawai/add', $content);
 			$this->load->view('_template/footer');
 		} else {
-			// $image = $_FILES['foto_pegawai']['name'];
-			// // dd($image);
-			// if ($image) {
-			// 	$config['allowed_types'] = 'gif|jpg|png';
-            //     $config['max_size'] = '2048';
-			// 	$config['upload_path'] = './assets/dist/img/profile';
-				
-			// 	$this->load->library('upload', $config);
-
-			// 	if($this->upload->do_upload('foto_pegawai')) {
-			// 		$foto_pegawai = $this->upload->data('file_name');
-            //     } else {
-            //         $this->upload->display_errors();
-            //     }
-			// }
-
 			$tgl_lahir_pegawai = date_create($this->input->post('tgl_lahir_pegawai'));
 			$tgl_lahir_pegawai = date_format($tgl_lahir_pegawai, 'Y-m-d');
 
@@ -149,20 +133,20 @@ class Pegawai extends CI_Controller {
 				$image = $data['foto_pegawai'];
 			} else {
 				$config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size'] = '2048';
-                $config['upload_path'] = './assets/dist/img/profile';
+				$config['max_size'] = '2048';
+				$config['upload_path'] = './assets/dist/img/profile';
 
-                $this->load->library('upload', $config);
+				$this->load->library('upload', $config);
 
-                if($this->upload->do_upload('foto_pegawai')){
-                    $old_image = $data['foto_pegawai'];
-                    if($upload_image != $old_image){
-                        unlink(FCPATH . 'assets/dist/img/profile/' . $old_image);
-                    }
-                    $image = $this->upload->data('file_name');
-                }else{
-                    echo $this->upload->display_errors();
-                }
+				if($this->upload->do_upload('foto_pegawai')){
+					$old_image = $data['foto_pegawai'];
+					if($upload_image != $old_image){
+						unlink(FCPATH . 'assets/dist/img/profile/' . $old_image);
+					}
+					$image = $this->upload->data('file_name');
+				}else{
+					echo $this->upload->display_errors();
+				}
 			}
 
 			$this->db->set('nip_pegawai', htmlspecialchars($this->input->post('nip_pegawai'), true));
@@ -189,9 +173,24 @@ class Pegawai extends CI_Controller {
 	}
 
 	public function delete($id) {
+		$user = $this->db->select('id_user')->get_where('pegawai', ['id_pegawai' => $id])->row_array();
 		$this->db->delete('pegawai', ['id_pegawai' => $id]);
+		$this->db->delete('users', ['id' => $user['id_user']]);
 		$this->session->set_flashdata('message', 'Dihapus');
 		redirect('pegawai');
+	}
+
+	public function detail_pegawai($id) {
+		$header['title'] = 'Pegawai';
+		$header['subtitle'] = 'Detail Pegawai';
+		
+		$content['title'] = 'Pegawai';
+		$content['subtitle'] = 'Detail Pegawai';
+		$content['pegawai'] = $this->db->get_where('pegawai', ['id_pegawai' => $id])->row_array();
+
+		$this->load->view('_template/header', $header);
+		$this->load->view('pegawai/detail_pegawai', $content);
+		$this->load->view('_template/footer');
 	}
 
 	public function salary() {
@@ -281,6 +280,60 @@ class Pegawai extends CI_Controller {
 		$this->db->delete('gaji', ['id_gaji' => $id]);
 		$this->session->set_flashdata('message', 'Dihapus');
 		redirect('pegawai/salary');
+	}
+
+	public function edit_data_pegawai() {
+		$id_pegawai = htmlspecialchars($this->input->post('id_pegawai'), true);
+		$image = $_FILES['foto_pegawai']['name'];
+		$nip = htmlspecialchars($this->input->post('nip_pegawai'), true);
+		$nama = htmlspecialchars($this->input->post('nama_pegawai'), true);
+		$tmpt_lahir = htmlspecialchars($this->input->post('tmpt_lahir_pegawai'), true);
+		$tgl_lahir = htmlspecialchars($this->input->post('tgl_lahir_pegawai'), true);
+		$jns_kelamin = htmlspecialchars($this->input->post('jns_kelamin_pegawai'), true);
+		$status_nikah = htmlspecialchars($this->input->post('status_pernikahan_pegawai'), true);
+		$no_hp = htmlspecialchars($this->input->post('no_hp_pegawai'), true);
+		$email = htmlspecialchars($this->input->post('email_pegawai'), true);
+		$agama = htmlspecialchars($this->input->post('agama_pegawai'), true);
+		$pend_terakhir = htmlspecialchars($this->input->post('pend_terakhir_pegawai'), true);
+		$alamat = htmlspecialchars($this->input->post('alamat_pegawai'), true);
+		
+		$pegawai = $this->db->select('foto_pegawai')->get_where('pegawai', ['id_pegawai' => $id_pegawai, 'nip_pegawai' => $nip])->row_array();
+		if ($image != "") {
+			$config['upload_path'] = "./assets/dist/img/profile"; //path folder file upload
+			$config['allowed_types'] = 'gif|jpg|jpeg|png'; //type file yang boleh di upload
+			$config['encrypt_name'] = TRUE; //enkripsi file name upload
+			$config['max_size'] = 5048;
+
+			$this->load->library('upload', $config);
+
+			if ($this->upload->do_upload('foto_pegawai')) {
+					$data = $this->upload->data(); //ambil file name yang diupload
+					$old_image = $pegawai['foto_pegawai'];
+					if ($old_image != "avatar.png") {
+						unlink(FCPATH . 'assets/dist/img/profile/' . $old_image);
+					}
+					$new_image = $data['file_name'];
+					$this->db->set('foto_pegawai', $new_image);
+			} else {
+					$res['status'] = false;
+					$res['msg'] = $this->upload->display_errors();
+			}
+		}
+		$res['status'] = true;
+
+		$this->db->set('tmpt_lahir_pegawai', $tmpt_lahir);
+		$this->db->set('tgl_lahir_pegawai', $tgl_lahir);
+		$this->db->set('jns_kelamin_pegawai', $jns_kelamin);
+		$this->db->set('status_pernikahan_pegawai', $status_nikah);
+		$this->db->set('agama_pegawai', $agama);
+		$this->db->set('alamat_pegawai', $alamat);
+		$this->db->set('email_pegawai', $email);
+		$this->db->set('no_hp_pegawai', $no_hp);
+		$this->db->set('pend_terakhir_pegawai', $pend_terakhir);
+		$this->db->where('nip_pegawai', $nip);
+		$this->db->update('pegawai');
+
+		echo json_encode($res);
 	}
 
 	public function penilaian() {
