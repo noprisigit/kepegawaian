@@ -23,6 +23,8 @@
     <!-- DataTables -->
     <script src="<?= base_url('assets/'); ?>plugins/datatables/jquery.dataTables.js"></script>
     <script src="<?= base_url('assets/'); ?>plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <!-- Toastr -->
+    <script src="<?= base_url('assets/'); ?>plugins/toastr/toastr.min.js"></script>
     <!-- Select2 -->
     <script src="<?= base_url('assets/'); ?>plugins/select2/js/select2.full.min.js"></script>
     <!-- Sweet Alert2 -->
@@ -37,6 +39,9 @@
     <!-- OPTIONAL SCRIPTS -->
     <script src="<?= base_url('assets/'); ?>dist/js/demo.js"></script>
     <script>
+        
+        $('[data-toggle="tooltip"]').tooltip()
+        
         //Initialize Select2 Elements
         $('.select2').select2();
         $('.select2bs4').select2({

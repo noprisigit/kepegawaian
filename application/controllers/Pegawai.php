@@ -5,7 +5,7 @@ class Pegawai extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('PegawaiModel');
-		if (!$this->session->userdata('email')) {
+		if (!$this->session->userdata('username')) {
 			redirect('auth');
 		}
 	}

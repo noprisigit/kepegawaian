@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>dist/css/adminlte.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/toastr/toastr.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -40,15 +42,26 @@
                 </li>
             </ul>
 
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="<?= base_url('auth/logout'); ?>" class="nav-link text-primary">Logout <i class="fas fa-power-off"></i></a>
+                <li class="nav-item dropdown mr-3">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <?php 
+                            $arr_nama = explode(" ", $this->session->userdata('nama'));
+                        ?>
+                        Welcome, <span class="text-bold text-primary"><?= $arr_nama[0] ?></span>
+                        <span class="text-bold"><i class="fa fa-caret-down"></i></span>   
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="dropdown-divider"></div>
+                        <a href="<?= base_url('auth/change-password') ?>" class="dropdown-item">
+                            <i class="fas fa-lock mr-2"></i> Ganti Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="<?= base_url('auth/logout'); ?>" class="dropdown-item">
+                            <i class="fas fa-power-off mr-2"></i> Logout
+                        </a>
+                    </div>
                 </li>
-        
-                <!-- <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i class="fas fa-th-large"></i></a>
-                </li> -->
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -151,7 +164,7 @@
                             <li class="nav-item">
                                 <a href="<?= base_url('users/data-diri'); ?>" class="nav-link <?= $title == 'Users' ? 'active' : '' ?>">
                                     <i class="nav-icon fas fa-user"></i>
-                                    <p>Data Diri</p>
+                                    <p>Profile Saya</p>
                                 </a>
                             </li>                    
                             <li class="nav-item">

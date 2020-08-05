@@ -5,7 +5,7 @@ class Users extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        if (!$this->session->userdata('email'))
+        if (!$this->session->userdata('username'))
             redirect('auth');
 
         $this->load->model('UserModel');
@@ -49,6 +49,14 @@ class Users extends CI_Controller {
         redirect('users');
     }
 
+    public function delete_user() {
+        $id_user = $this->uri->segment(3);
+        
+        $this->db->delete('users', ['id' => $id_user]);
+        $this->session->set_flashdata('message', 'Dihapus');
+        redirect('users');
+    }
+
     public function block_user($id) {
         $this->db->set('status_account', 0);
         $this->db->where('id', $id);
@@ -60,8 +68,9 @@ class Users extends CI_Controller {
 
     public function data_diri() {
         $header['title'] = 'Users';
-        $header['subtitle'] = 'Data Diri';
+        $header['subtitle'] = 'Profile';
 
+        // dd($this->session->userdata('id_user'));
         $content['pegawai'] = $this->UserModel->get_data_diri($this->session->userdata('id_user'));
         // dd($content['pegawai']);
 
@@ -80,7 +89,7 @@ class Users extends CI_Controller {
 		$this->form_validation->set_rules('no_hp_pegawai', 'No Handphone Pegawai', 'trim|required', ['required' => 'No Handphone Pegawai Harus Diisi']);
 		$this->form_validation->set_rules('email_pegawai', 'Email Pegawai', 'trim|required', ['required' => 'Email Pegawai Harus Diisi']);
 		$this->form_validation->set_rules('tgl_masuk_pegawai', 'Tanggal Masuk Pegawai', 'trim|required', ['required' => 'Tanggal Masuk Pegawai Harus Dipilih']);
-		$this->form_validation->set_rules('status_pegawai', 'Status Pegawai', 'trim|required', ['required' => 'Status Pegawai Harus Dipilih']);
+		// $this->form_validation->set_rules('status_pegawai', 'Status Pegawai', 'trim|required', ['required' => 'Status Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('agama_pegawai', 'Agama Pegawai', 'trim|required', ['required' => 'Agama Pegawai Harus Dipilih']);
 		$this->form_validation->set_rules('pend_terakhir_pegawai', 'Pendidikan Terakhir Pegawai', 'trim|required', ['required' => 'Pendidikan Terakhir Harus Dipilih']);
 		$this->form_validation->set_rules('alamat_pegawai', 'Alamat Pegawai', 'trim|required', ['required' => 'Alamat Pegawai Harus Diisi']);
@@ -147,6 +156,60 @@ class Users extends CI_Controller {
         }
     }
 
+    public function edit_biodata() {
+        $id_pegawai = htmlspecialchars($this->input->post('id_pegawai'), true);
+        $image = $_FILES['foto_pegawai']['name'];
+        $nip = htmlspecialchars($this->input->post('nip_pegawai'), true);
+        $nama = htmlspecialchars($this->input->post('nama_pegawai'), true);
+        $tmpt_lahir = htmlspecialchars($this->input->post('tmpt_lahir_pegawai'), true);
+        $tgl_lahir = htmlspecialchars($this->input->post('tgl_lahir_pegawai'), true);
+        $jns_kelamin = htmlspecialchars($this->input->post('jns_kelamin_pegawai'), true);
+        $status_nikah = htmlspecialchars($this->input->post('status_pernikahan_pegawai'), true);
+        $no_hp = htmlspecialchars($this->input->post('no_hp_pegawai'), true);
+        $email = htmlspecialchars($this->input->post('email_pegawai'), true);
+        $agama = htmlspecialchars($this->input->post('agama_pegawai'), true);
+        $pend_terakhir = htmlspecialchars($this->input->post('pend_terakhir_pegawai'), true);
+        $alamat = htmlspecialchars($this->input->post('alamat_pegawai'), true);
+        
+        $pegawai = $this->db->select('foto_pegawai')->get_where('pegawai', ['id_pegawai' => $id_pegawai, 'nip_pegawai' => $nip])->row_array();
+        if ($image != "") {
+            $config['upload_path'] = "./assets/dist/img/profile"; //path folder file upload
+            $config['allowed_types'] = 'gif|jpg|jpeg|png'; //type file yang boleh di upload
+            $config['encrypt_name'] = TRUE; //enkripsi file name upload
+            $config['max_size'] = 5048;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('foto_pegawai')) {
+                $data = $this->upload->data(); //ambil file name yang diupload
+                $old_image = $pegawai['foto_pegawai'];
+                if ($old_image != "avatar.png") {
+                    unlink(FCPATH . 'assets/dist/img/profile/' . $old_image);
+                }
+                $new_image = $data['file_name'];
+                $this->db->set('foto_pegawai', $new_image);
+            } else {
+                $res['status'] = false;
+                $res['msg'] = $this->upload->display_errors();
+            }
+        }
+        $res['status'] = true;
+
+        $this->db->set('tmpt_lahir_pegawai', $tmpt_lahir);
+        $this->db->set('tgl_lahir_pegawai', $tgl_lahir);
+        $this->db->set('jns_kelamin_pegawai', $jns_kelamin);
+        $this->db->set('status_pernikahan_pegawai', $status_nikah);
+        $this->db->set('agama_pegawai', $agama);
+        $this->db->set('alamat_pegawai', $alamat);
+        $this->db->set('email_pegawai', $email);
+        $this->db->set('no_hp_pegawai', $no_hp);
+        $this->db->set('pend_terakhir_pegawai', $pend_terakhir);
+        $this->db->where('nip_pegawai', $nip);
+        $this->db->update('pegawai');
+
+        echo json_encode($res);
+    }
+
     public function absensi() {
         $this->form_validation->set_rules('status_absensi', 'Status absensi', 'trim|required', [
             'required'  =>  '%s harus diisi'
@@ -161,7 +224,7 @@ class Users extends CI_Controller {
 
             $pegawai = $this->db->get_where('pegawai', ['id_user' => $this->session->userdata('id_user')])->row_array();
             $content['absensi'] = $this->db->query('SELECT COUNT(*) as total FROM absensi WHERE id_pegawai = '. $pegawai['id_pegawai'] .' and date(tgl_absensi) = CURDATE()')->row_array();
-            // dd($absensi);
+            $content['data_absensi'] = $this->db->get_where('absensi', ['id_pegawai' => $pegawai['id_pegawai']])->result_array();
             $this->load->view('_template/header', $header);
             $this->load->view('users/absensi', $content);
             $this->load->view('_template/footer');

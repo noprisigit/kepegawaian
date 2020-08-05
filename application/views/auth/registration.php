@@ -26,14 +26,14 @@
             <a href="<?= base_url(); ?>"><b>Sistem </b>Kepegawaian</a>
         </div>
 
-        <div class="card">
+        <div class="card card-primary card-outline">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Register a new membership</p>
+                <!-- <p class="login-box-msg">Register a new membership</p> -->
 
                 <form action="<?= base_url('auth/registration'); ?>" method="post">
                     <div class="form-group">                    
                         <div class="input-group">
-                            <input type="text" class="form-control" name="nama"  placeholder="Full name">
+                            <input type="text" class="form-control" name="nama"  placeholder="Nama Lengkap">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-user"></span>
@@ -44,14 +44,14 @@
                     </div>
                     <div class="form-group">                    
                         <div class="input-group">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <input type="text" class="form-control" name="username" placeholder="Username">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
                                 </div>
                             </div>
                         </div>
-                        <?= form_error('email', '<small class="text-danger">', '</small>'); ?>
+                        <?= form_error('username', '<small class="text-danger">', '</small>'); ?>
                     </div>
                     <div class="form-group">                    
                         <div class="input-group">
@@ -85,7 +85,8 @@
                 </form>
 
                 <p class="mt-3 mb-0 text-center">
-                    <a href="<?= base_url('auth'); ?>" class="text-center">Already have account</a>
+                    Punya Akun? 
+                    <a href="<?= base_url('auth'); ?>" class="text-center">Login</a>
                 </p>
             </div>
             <!-- /.form-box -->

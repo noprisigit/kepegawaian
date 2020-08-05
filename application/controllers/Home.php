@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		if (!$this->session->userdata('email')) {
+		if (!$this->session->userdata('username')) {
 			redirect('auth');
 		}
 		if ($this->session->userdata('status_access') != "admin") {
@@ -24,7 +24,7 @@ class Home extends CI_Controller {
 	}
 
 	public function user() {
-		if (!$this->session->userdata('email')) {
+		if (!$this->session->userdata('username')) {
 			redirect('auth');
 		}
 
