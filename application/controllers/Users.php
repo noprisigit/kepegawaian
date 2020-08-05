@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
 
         if (!$this->session->userdata('username'))
             redirect('auth');
@@ -18,35 +19,75 @@ class Users extends CI_Controller {
         $header['title'] = 'Users';
         $header['subtitle'] = 'List Users';
 
-        $content['users'] = $this->db->get('users')->result_array();
+        $content['users'] = $this->db->get_where('users', ['status_access' => 'admin'])->result_array();
         
         $this->load->view('_template/header', $header);
 		$this->load->view('users/index', $content);
 		$this->load->view('_template/footer');
     }
 
+    public function users_pegawai() {
+        if ($this->session->userdata('status_access') != "admin") {
+			redirect('home/user');
+        }
+        
+        $header['title'] = 'Users';
+        $header['subtitle'] = 'List Users Pegawai';
+
+        $content['users_pegawai'] = $this->db->get_where('users', ['status_access' => 'pegawai'])->result_array();
+        $this->load->view('_template/header', $header);
+		$this->load->view('users/users_pegawai', $content);
+		$this->load->view('_template/footer');
+    }
+
     public function verify($id) {
+        $user = $this->db->select('username, status_access')->get_where('users', ['id' => $id])->row_array();
         $this->db->set('status_account', 1);
+        $this->db->set('date_updated', date('Y-m-d H:i:s'));
         $this->db->where('id', $id);
         $this->db->update('users');
 
-        $this->session->set_flashdata('message', 'Diverifikasi');
-        redirect('users');
+        $this->session->set_flashdata('message', 'Username <strong><u>' . $user['username'] . '</u></strong> telah <strong><u>diaktifkan</u></strong>');
+        if ($user['status_access'] == "admin") {
+            redirect('users');
+        } else {
+            redirect('users/users-pegawai');
+        }
+    }
+
+    public function store_user() {
+        $username = $this->input->post('username');
+        $nama = $this->input->post('nama');
+        $pass = $this->input->post('pass');
+
+        $input = [
+            'nama'              => $nama,
+            'username'          => $username,
+            'password'          => password_hash($pass, PASSWORD_DEFAULT),
+            'status_access'     => "admin",
+            'status_account'    => 1,
+            'date_created'      => date('Y-m-d H:i:s'),
+            'date_updated'      => date('Y-m-d H:i:s')
+        ];
+
+        $this->db->insert('users', $input);
+        $res['status'] = true;
+        echo json_encode($res);
     }
 
     public function edit_user () {
         date_default_timezone_set('asia/jakarta');
 
         $this->db->set('nama', $this->input->post('nama'));
-        $this->db->set('email', $this->input->post('email'));
-        $this->db->set('status_access', $this->input->post('status_akses'));
-        $this->db->set('status_account', $this->input->post('status_akun'));
+        $this->db->set('password', password_hash($this->input->post('pass'), PASSWORD_DEFAULT));
         $this->db->set('date_updated', date('Y-m-d H:i:s'));
-        $this->db->where('id', $this->input->post('id_user'));
+        $this->db->where('id', $this->input->post('id'));
         $this->db->update('users');
 
-        $this->session->set_flashdata('message', 'Diperbaharui');
-        redirect('users');
+        $res['status'] = true;
+        echo json_encode($res);
+        // $this->session->set_flashdata('message', 'Diperbaharui');
+        // redirect('users');
     }
 
     public function delete_user() {
@@ -58,12 +99,19 @@ class Users extends CI_Controller {
     }
 
     public function block_user($id) {
+        
+        $user = $this->db->select('username, status_access')->get_where('users', ['id' => $id])->row_array();
         $this->db->set('status_account', 0);
+        $this->db->set('date_updated', date('Y-m-d H:i:s'));
         $this->db->where('id', $id);
         $this->db->update('users');
 
-        $this->session->set_flashdata('message', 'Diblock');
-        redirect('users');
+        $this->session->set_flashdata('message', 'Username <strong><u>' . $user['username'] . '</u></strong> telah <strong><u>dinonaktifkan</u></strong>');
+        if ($user['status_access'] == "admin") {
+            redirect('users');
+        } else {
+            redirect('users/users-pegawai');
+        }
     }
 
     public function data_diri() {

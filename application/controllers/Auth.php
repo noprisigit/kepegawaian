@@ -161,4 +161,15 @@ class Auth extends CI_Controller {
          redirect('auth/change-password');   
       }
    }
+
+   public function reset_password() {
+      $id = $this->uri->segment(3);
+
+      $this->db->set('password', password_hash("123", PASSWORD_DEFAULT));
+      $this->db->where('id', $id);
+      $this->db->update('users');
+
+      $this->session->set_flashdata('message', 'Reset password berhasil dilakukan');
+      redirect('users/users-pegawai');
+   }
 }

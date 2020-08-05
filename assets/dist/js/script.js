@@ -24,6 +24,16 @@ $(document).ready(function() {
 			type: 'success'
 		})
 	}
+
+	const message_baru = $('.message-baru').data('message');
+	
+	if (message_baru) {
+		Swal.fire({
+			title: "Good Job!",
+			html: message_baru,
+			type: 'success'
+		})
+	}
 	
 	// Delete Pegawai
 	$('.delete-pegawai').on('click', function (e) {
@@ -297,6 +307,7 @@ $(document).ready(function() {
 					e.prevendDefault();
 					toastr.error(res.msg);
 				} else {
+					$('#modalEditDataJabatan').modal('hide');
 					Swal.fire(
 						'Good job!',
 						'Jabatan pegawai telah diperbaharui',
@@ -358,6 +369,7 @@ $(document).ready(function() {
 					e.prevendDefault();
 					toastr.error(res.msg);
 				} else {
+					$('#modalTambahDataJabatan').modal('hide');
 					Swal.fire(
 						'Good job!',
 						'Jabatan pegawai telah diperbaharui',
@@ -437,6 +449,166 @@ $(document).ready(function() {
 					} else {
 						$('#edt_jabatan_pegawai').append(`<option value="`+ res.data[i].id_jabatan +`">`+ res.data[i].nama_jabatan +`</option>`);
 					}
+				}
+			}
+		});
+		return false;
+	});
+
+	$('.btnResetPassword').on('click', function(e) {
+		e.preventDefault();
+		const href = $(this).attr('href');
+		const username = $(this).data('username');
+
+		Swal.fire({
+			title: 'Are you sure?',
+			html: "Password <strong><u>" + username + "</u></strong> akan diubah menjadi <strong><u>123</u></strong>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, reset!'
+		}).then((result) => {
+			if (result.value) {
+				document.location.href = href;
+			}
+		});
+	});
+
+	$('.btnBlockUser').on('click', function(e) {
+		e.preventDefault();
+		const href = $(this).attr('href');
+		const username = $(this).data('username');
+
+		Swal.fire({
+			title: 'Are you sure?',
+			html: "Username <strong><u>" + username + "</u></strong> akan <strong><u>dinonaktifkan</u></strong>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, do it!'
+		}).then((result) => {
+			if (result.value) {
+				document.location.href = href;
+			}
+		});
+	});
+
+	$('.btnEditUser').on('click', function() {
+		$('#modal-edit').modal('show');
+
+		$('#modal-edit #id_user').val($(this).data('id'));
+		$('#modal-edit #username').val($(this).data('username'));
+	});
+
+	$('#formUpdateDataUser').submit(function(e) {
+		const id = $('#id_user').val();
+		const nama = $('#nama').val();
+		const username = $('#username').val();
+		const pass = $('#password').val();
+		const conf_pass = $('#confirm_password').val();
+
+		if (nama === "") {
+			e.preventDefault();
+			toastr.error('Kolom nama harus diisi');
+			return false;
+		}
+		if (username === "") {
+			e.preventDefault();
+			toastr.error('Kolom username harus diisi');
+			return false;
+		}
+		if (pass === "") {
+			e.preventDefault();
+			toastr.error('Kolom password harus diisi');
+			return false;
+		}
+		if (conf_pass === "") {
+			e.preventDefault();
+			toastr.error('Kolom konfirmasi password harus diisi');
+			return false;
+		}
+
+		if (pass !== conf_pass) {
+			e.preventDefault();
+			toastr.error('Password dan konfirmasi password harus sama');
+			return false;
+		}
+
+		$.ajax({
+			url: 'users/edit-user',
+			type: 'post',
+			data: { id: id, nama: nama, pass: pass },
+			dataType: 'json',
+			success: function(res) {
+				if (res.status) {
+					$('#modal-edit').hide();
+					Swal.fire(
+						'Good job!',
+						'Data user telah diperbaharui',
+						'success'
+					).then((result) => {
+						if (result.value) {
+							window.location.href = "users";
+						}
+					});
+				}
+			}
+		});
+		return false;
+	});
+
+	$('#formTambahDataUser').submit(function(e) {
+		const nama = $('#add_nama').val();
+		const username = $('#add_username').val();
+		const pass = $('#add_password').val();
+		const conf_pass = $('#add_confirm_password').val();
+
+		if (nama === "") {
+			e.preventDefault();
+			toastr.error('Kolom nama harus diisi');
+			return false;
+		}
+		if (username === "") {
+			e.preventDefault();
+			toastr.error('Kolom username harus diisi');
+			return false;
+		}
+		if (pass === "") {
+			e.preventDefault();
+			toastr.error('Kolom password harus diisi');
+			return false;
+		}
+		if (conf_pass === "") {
+			e.preventDefault();
+			toastr.error('Kolom konfirmasi password harus diisi');
+			return false;
+		}
+
+		if (pass !== conf_pass) {
+			e.preventDefault();
+			toastr.error('Password dan konfirmasi password harus sama');
+			return false;
+		}
+
+		$.ajax({
+			url: 'users/store-user',
+			type: 'post',
+			data: { username: username, nama: nama, pass: pass },
+			dataType: 'json',
+			success: function(res) {
+				if (res.status) {
+					$('#modalTambahUser').hide();
+					Swal.fire(
+						'Good job!',
+						'Data user telah ditambah',
+						'success'
+					).then((result) => {
+						if (result.value) {
+							window.location.href = "users";
+						}
+					});
 				}
 			}
 		});

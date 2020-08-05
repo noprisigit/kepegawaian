@@ -79,6 +79,7 @@
                 { "width": "100px", "targets": 7 },
             ]
         });
+        $('#data-users-pegawai').DataTable();
     
         $('#ed_nama_pegawai').on('change', function () {
             var nama_pegawai = $(this).val();

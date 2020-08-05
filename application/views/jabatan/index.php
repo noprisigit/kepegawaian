@@ -1,6 +1,6 @@
 <div class="content-wrapper">
    <div class="content-header">
-      <div class="container">
+      <div class="container-fluid">
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="m-0 text-dark"><?= $subtitle; ?></h1>
@@ -16,12 +16,12 @@
    </div>
 
    <section class="content">
-      <div class="container">
+      <div class="container-fluid">
          <div class="message" data-title="Data Jabatan" data-message="<?= $this->session->flashdata('message'); ?>"></div>
          <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus-square mr-2"></i>Tambah Jabatan</button>
          <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalTambahDataJabatan"><i class="fas fa-plus-square mr-2"></i>Tambah Data Jabatan</button>
          <div class="row mt-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                <div class="card card-primary card-outline">
                   <div class="card-body p-0">
                      <table class="table table-striped">
@@ -54,7 +54,7 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                <div class="card card-primary card-outline">
                   <div class="card-body">
                      <table class="table table-bordered">
